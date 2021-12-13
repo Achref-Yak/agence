@@ -1,0 +1,5 @@
+com\esprit\microservice\avionservice\AvionApplication.class
+com\esprit\microservice\avionservice\AvionService.class
+com\esprit\microservice\avionservice\Avion.class
+com\esprit\microservice\avionservice\AvionRestAPI.class
+com\esprit\microservice\avionservice\AvionRepository.class

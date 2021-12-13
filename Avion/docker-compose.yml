@@ -1,0 +1,25 @@
+version: "2.2"
+services:
+
+
+  Avion:
+    build:  C:\Users\sella\OneDrive\Bureau\Avion\Avion
+    ports:
+      - "8082:8082"
+    image: "avion"
+    hostname: "avion_Avion_1"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - Eureka
+
+
+  Eureka:
+    container_name: EurekaService
+    build: C:\Users\sella\OneDrive\Bureau\Avion\EurekaService
+    ports:
+      - "8761:8761"
+    hostname: "serviceregistry"
+    image: "eureka"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/

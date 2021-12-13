@@ -1,0 +1,99 @@
+version: "3.9"
+services:
+  discovery:
+    build: ./Eureka
+    ports:
+    - "8761:8761"
+    image: "discovery"
+    networks:
+      - agence-net
+    hostname: "serviceregistry"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+  docker-mysql_2:
+    hostname: "docker-mysql_2"
+    container_name: "docker-mysql_2"
+    image: "mysql:5.6"
+    networks:
+      - agence-net
+    environment:
+      - MYSQL_ROOT_PASSWORD=fahed
+      - MYSQL_DATABASE=clients
+    ports:
+      - 3306:3306
+  passager:
+    build: ./Passager
+    networks:
+      - agence-net
+    ports:
+      - "8085:8085"
+    image: "passager"
+    hostname: "passager-service"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_2:3306/clients
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - discovery
+  Avion:
+    build: .\Avion
+    networks:
+      - agence-net
+    ports:
+      - "8082:8082"
+    image: "avion"
+    hostname: "avion-service"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - discovery
+  
+  vol:
+    build: .\vol
+    networks:
+      - agence-net
+    ports:
+      - "8083:8083"
+    image: "vol"
+    hostname: "vol-service"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - discovery
+      
+  Employer:
+    build: ./employer
+    networks:
+      - agence-net
+    ports:
+      - "8086:8086"
+    image: "empl"
+    hostname: "employer-service"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_2:3306/clients
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - discovery
+  Zuul:
+    container_name: Zuul
+    image: "zuul"
+    build: ./Zuul-Gateway
+    ports:
+      - "8763:8763"
+    networks:
+      - agence-net
+    hostname: Zuul
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - "discovery"
+  Mongo:
+    container_name: Mongo
+    image: "mongo:5-focal"
+    ports:
+      - "27017:27017"
+    hostname: Mongo
+    depends_on:
+      - "discovery"
+
+networks:
+  agence-net: 
