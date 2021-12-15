@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/candidats")
+@RequestMapping(value = "/api/passager")
 public class PassagerRestAPI {
 	private String title = "Hello, I'm the passager Microservice";
 	@Autowired

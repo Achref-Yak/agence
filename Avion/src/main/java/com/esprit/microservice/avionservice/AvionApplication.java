@@ -17,14 +17,14 @@ public class AvionApplication {
 		SpringApplication.run(AvionApplication.class, args);
 	}
 	
-	 @Bean
+	/* @Bean
 	    ApplicationRunner init(AvionRepository repository) {
 	        return args -> {
 	            Stream.of("Airbus A320", "Boeing 747", "Boeing 777").forEach(type -> {
-	                repository.save(new Avion(type,230,"Airbus"));
+	                repository.save(new Avion(type);
 	            });
 	            repository.findAll().forEach(System.out::println);
 	        };
-	    }
+	    }*/
 
 }

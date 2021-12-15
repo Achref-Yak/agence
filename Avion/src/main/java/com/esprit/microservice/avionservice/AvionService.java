@@ -1,5 +1,7 @@
 package com.esprit.microservice.avionservice;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,13 @@ public class AvionService {
 	public Avion addAvion(Avion avion) {
 		return avionRepository.save(avion);
 	}
+
+
+	public List<Avion> getAvions() {
+		return avionRepository.findAll();
+	}
+ 
+
 	public Avion updateAvion(int id, Avion newAvion) {
 		if (avionRepository.findById(id).isPresent()) {
 			Avion existingAvion = avionRepository.findById(id).get();

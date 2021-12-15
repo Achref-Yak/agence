@@ -46,7 +46,20 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
     depends_on:
       - discovery
-  
+
+  pilote:
+    build: .\pilote
+    networks:
+      - agence-net
+    ports:
+      - "8084:8084"
+    image: "pilote"
+    hostname: "pilote-service"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - discovery
+
   vol:
     build: .\vol
     networks:
